@@ -1,0 +1,2295 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.5.3/math.js" integrity="sha512-pRtih3rN7XIX59czB+hZ5OKR7NuOWmVg/2TI3YGC5izj2kDPaCXOpzS5sIMBs+/3beEAXQOiKqS37tfCuAZToA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <title>Distribution Cheatsheet</title>
+</head>
+
+<body>
+    <div class="text-center" id="curved">
+
+        <div class="container">
+            <h1 class="jumbotron-heading">Distribution Cheatsheet</h1>
+            <p class="lead text-muted">A Cheatsheet for common and uncommon distributions!</p>
+            
+            <h6 onclick="test_fn()">Select tags:</h6>
+            <div id="searchcontainer" class="shadow">
+                <div onclick="select_tag('univariate')" class="univariate tag"></div>
+                <div onclick="select_tag('multivariate')" class="multivariate tag"></div>
+                <div onclick="select_tag('discrete')" class="discrete tag"></div>
+                <div onclick="select_tag('continuous')" class="continuous tag"></div>
+                <div onclick="select_tag('likelihood')" class="likelihood tag"></div>
+                <div onclick="select_tag('prior')" class="prior tag"></div>
+            </div>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#3a86ff" fill-opacity="1"
+                d="M0,64L48,96C96,128,192,192,288,208C384,224,480,192,576,160C672,128,768,96,864,112C960,128,1056,192,1152,202.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+            
+        </svg>
+    </div>
+
+
+    
+    <div class="album py-5 curved">
+        
+        
+        <div class="container">
+            <h2>Common Distributions</h2>
+
+            <!-- First row -->
+            <div class="row display-flex">
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Bernoulli</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="discrete tag"></div>
+                                    <div class="likelihood tag"></div>
+                                </div>
+                            </div>
+
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#bernoulliModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="bernoulliModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Bernoulli Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <!--<img src="normal.png" width="100%" height="200px">-->
+                                <canvas id="berndist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">Proportion</label>
+                                    <input type="range" id="berndist_prob" name="Sigma"
+                                           min="0" max="1" value=".25" step="0.05" onchange="update_bern_dist()">                                   
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A distribution for a single trial, binary outcome event.</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Discrete Data</li>
+                                    <li>Single Trial</li>
+                                    <li>Only 2 possible outcomes (Success and Failure)</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p>A single attempt at flipping a coin.</p>
+                                <h5>PMF Equation:</h5>
+                                <p>$$Pr(X = k | \theta) = \theta^k(1-\theta)^{(1-k)} $$</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Binomial</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="discrete tag"></div>
+                                    <div class="likelihood tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#binomialModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="binomialModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Binomial Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                
+                                <canvas id="binomdist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">Proportion</label>
+                                    <input type="range" id="binomdist_prob" name="Sigma"
+                                           min="0.1" max=".25" value=".175" step="0.05" onchange="update_binom_dist()">                                   
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A distribution for a fixed number of binary outcome trials.</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Discrete Data</li>
+                                    <li>Fixed number of trials</li>
+                                    <li>Each trial has 2 possible outcomes (Success and Failure)</li>
+                                    <li>Trial outcomes are independent</li>
+                                    <li>Probability of success is the same with each trial</li>
+                                    <li>The outcome is the aggregate number of successes</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Clinical drug trial. 10 subjects are infected with a virus, and are then given an
+                                    experimental drug. The outcome can be either recovered (x=1), or not recovered
+                                    (x=0). If we fix the outcome, we can use ML to estimate the probability. If we fix
+                                    the probability, we can estimate the number of successes.</p>
+                                <h5>PMF Equation:</h5>
+                                <p>$$Pr(X = k |n, \theta) = \binom{n}{k}\theta^k(1-\theta)^{(n-k)}$$</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Poisson</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="discrete tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#poissonModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="poissonModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Poisson Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                
+                                <canvas id="poissondist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">Rate</label>
+                                    <input type="range" id="possion_rate" name="Sigma"
+                                           min="1" max="15" value="1" step="0.5" onchange="update_poisson_dist()">                                   
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A distribution for estimating the probability of an event given a rate.</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Count of discrete events</li>
+                                    <li>Non-negative integer numbers</li>
+                                    <li>Individual events occur at a given rate and independently of each other</li>
+                                    <li>Fixed amount of time or space in which an event can occur.</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Estimating failure rates of artificial heart valves. We collected data over a number
+                                    of (example: 5) years, and count the number of failures. Let us assume we witnessed
+                                    failures per year of [7,3,9,8,9]. This gives us a rate of 7.2 per year.
+                                    From here we can estimate the probability of seeing a certain number of failures
+                                    (Eg: 2) in the next year (\( Pr(X=2|\lambda) \))</p>
+                                <h5>PMF Equation:</h5>
+                                <p>$$Pr(X = k |\lambda) = \frac{\lambda^k}{k!}e^{-\lambda}$$</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+
+                <!-- Row end -->
+            </div>
+
+            <!-- Second row -->
+            <div class="row display-flex">
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Negative Binomial</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="discrete tag"></div>
+                                    <div class="likelihood tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#negbinomModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="negbinomModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Negative Binomial Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                
+                                <canvas id="negbinomdist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">r</label>
+                                    <input type="range" id="negbinom_rate" name="Sigma"
+                                           min="1" max="40" value="5" step="1" onchange="update_negbinom_dist()">                                   
+                                  <label for="volume">Probability</label>
+                                  <input type="range" id="negbinom_theta" name="Sigma"
+                                         min="0.05" max="1" value=".5" step="0.05" onchange="update_negbinom_dist()">                                   
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A distribution for a single trial, binary outcome event. The can do everything the
+                                    Poisson can do, and more! Can be useful for modelling the outbreak of diseases, as
+                                    outbreaks are likely to be influenced by one another.
+                                    This distribution takes in the same parameters as the poisson, in addition to a
+                                    "connectedness" parameter.
+                                </p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Count of discrete Data</li>
+                                    <li>Non-independent events. It can be possible that an event occurs, affecting the
+                                        probability of a second event occuring.</li>
+                                    <li>Can model a data-generating process where the variance is greater than the mean.
+                                    </li>
+                                    <li>Fixed amount of time (or space) in which the events can occur.</li>
+                                    <li>Uses \(\kappa\) as a measure of dispersion (small number, less dispersed).</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p>We want to predict the number of flu-infected villagers by modelling the outbreak of
+                                    a flu in different villages. Suppose each village has some rate \(\theta\) of
+                                    outbreaks per season. Additionally, villages have some degree of connectedness
+                                    either via family, commuting etc.
+                                    This connectedness, or dispersion \(\kappa\) is reflected by \(\theta\), in that
+                                    villages with higher \(\theta\) are more connected. We calculate an overall rate of
+                                    infection \(\lambda\) by averaging the individual \(\theta\). If each village has
+                                    the same level of dispersion, then the Negative Binomial Distribution devolves into
+                                    the Poisson distribution. By varying \(\theta\) across villages, the variance of the
+                                    overall distribution increases, and we end up with a wider distribution compared to
+                                    the Poisson with the variance being given by:
+                                    $$\lambda + \frac{\lambda^2}{\kappa} \geq var(X_{poisson}) = \lambda,$$
+                                    which exceeds the overall variance of individuals with the flu if all towns were
+                                    identical.
+                                </p>
+                                <h5>PMF Equation:</h5>
+                                <h6>Using (inverse) dispersion \(\kappa\):</h6>
+                                <p>$$Pr(X = y |\lambda, \kappa) = \frac{\Gamma\left(y + \kappa
+                                    \right)}{y!\Gamma\left(\kappa + 1 \right)} \left( \frac{\lambda}{\lambda + \kappa}
+                                    \right)^y \left( \frac{\kappa}{\lambda + \kappa} \right)^\kappa$$</p>
+                                <p>where \(y\) = number of realisations, \(\Gamma\) is the Gamma Function, \(\lambda\)
+                                    is the overall rate, and \(\kappa\) is the inversion dispersion.</p>
+                                <h6>Using \(\theta\)</h6>
+                                <p>$$Pr(X = y |r, \theta) = \binom{r+y-1}{r-1}(1-\theta)^y\theta^r$$</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Student's-\(t\)</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#sttModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="sttModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Students-T Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <!--<img src="studentst.png" width="100%" height="200px">-->
+                                <canvas id="sttdist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="DF">Degrees of Freedom</label>
+                                    <input type="range" id="stt_df" name="DF"
+                                           min="1" max="10" value="1" onchange="update_stt_dist()">
+                                    <label for="DF">Mean</label>
+                                    <input type="range" id="stt_mean" name="DF"
+                                            min="-10" max="10" value="0" onchange="update_stt_dist()">
+                                    <label for="DF">Variance</label>
+                                    <input type="range" id="stt_var" name="DF"
+                                            min="1" max="10" value="1" onchange="update_stt_dist()">
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>This is the overdispersed cousin of the normal distribution. That is, when the sample
+                                    variance is greater than what the normal distribution assumes. The Students-t can be
+                                    considered as a combination of multiple normals with difference variances. Can be
+                                    used
+                                    for anything the normal distribution is used for, and more! For example stock
+                                    returns.
+                                </p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Countinous Data</li>
+                                    <li>(practically) Unbounded outcomes</li>
+                                    <li>Outcome is the outcome of a large number of additive factors</li>
+                                    <li>Data sample composed of heterogeneous individuals</li>
+                                    <li>Sometimes called the cauchy-distribution</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p> Suppose we want to model the test-score distribution after combining 2 schools with
+                                    normal distributions and same means but with differing variances. The combination of
+                                    these schools, while keeping the mean the same, will result in a distribution that
+                                    is no
+                                    longer normal. This is mostly evident in the kurtosis or fatter tails.
+                                </p>
+                                <h5>PDF Equation:</h5>
+                                <p>$$Pr(X = x |\mu, \sigma, v) = \frac{\left(\frac{v}{v+\frac{(x-\mu)^2}{\sigma^2}}
+                                    \right)^{\frac{v+1}{2}}}{\sqrt{v}\sigma B\left(\frac{v}{2}, \frac{1}{2} \right)}$$
+                                </p>
+                                <p>where \(v\) is the degrees of freedom.</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+                
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Normal Distribution</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#normModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="normModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Normal Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <!--<img src="normal.png" width="100%" height="200px">-->
+                                <canvas id="normdist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">Mean</label>
+                                    <input type="range" id="normdist_mean" name="Sigma"
+                                           min="-15" max="15" value="0" onchange="update_norm_dist()">
+                                    <label for="volume">Variance</label>
+                                    <input type="range" id="normdist_sigma" name="Sigma"
+                                                min="1" max="50" value="10" onchange="update_norm_dist()">
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>The normal distribution we all know and love. Nice bell-shape. Occurs everywhere in
+                                    nature.</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Countinous data</li>
+                                    <li>Unbounded, or at least practically unbounded.</li>
+                                    <li>Outcome is the result of large number of additive factors.</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Can be used to explain the distribution of body temperatures among people. The
+                                    distribution requires 2 paramters: \(\mu\), the mean, and \(\sigma\), the standard
+                                    deviation. We gather these 2 parameters via sampling, and then have a distribution.
+                                    We can then estimate the probability of a certain person having a specific body
+                                    temperature.</p>
+                                <h5>PDF Equation:</h5>
+                                <p>$$Pr(X = x|\sigma, \mu) =
+                                    \frac{1}{\sqrt{2\pi\sigma^2}}e^{-(\frac{(x-\mu)}{2\sigma})^2}$$</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+
+                <!-- Row end -->
+            </div>
+            <h2>Less-common Distributions</h2>
+
+            <!-- Third row -->
+            <div class="row display-flex">
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Beta Binomial</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="discrete tag"></div>
+                                    <div class="likelihood tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#betabinomModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="betabinomModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Beta-Binomial Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                
+                                <canvas id="betabinomdist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">N</label>
+                                    <input type="range" id="betabinom_n" name="Sigma"
+                                           min=1 max=50 value=50 step=1 onchange="update_betabinom_dist()">                                   
+                                  
+                                  <label for="volume">Alpha</label>
+                                    <input type="range" id="betabinom_a" name="Sigma"
+                                           min=0.05 max=15 value=2 step=0.05 onchange="update_betabinom_dist()">                                   
+                                  
+                                  <label for="volume">Beta</label>
+                                    <input type="range" id="betabinom_b" name="Sigma"
+                                        min=0.05 max=15 value=5 step=0.05 onchange="update_betabinom_dist()">                                   
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>Very similar to the binomial, but makes an additional assumption of different
+                                    probabilities per sub-trial. In other words, can do everything the binomial does,
+                                    and more!</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Discrete Data</li>
+                                    <li>Multiple trials (reps), with a fixed number of total trials (sets)</li>
+                                    <li>Each trial has 2 possible outcomes (Success and Failure)</li>
+                                    <li>Measures the aggregate number of successes</li>
+                                    <li>Probability of success varies with each trial</li>
+
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Suppose we want to predict the number of of votes for Party A in a 2 party system
+                                    across differing states. Each state will likely have their own preferences
+                                    (probabilities) when voting. We use surveys in each state to estimate each
+                                    probability \(\theta\). We might assume that for each state, the probability of
+                                    voting for party A can be modelled by the binomial distribution \(X \sim B(n,
+                                    \theta)\) where \(n\) is sample size and \(\theta\) is the probability of voting
+                                    party A for an individual. The overall probability would then be the combination of
+                                    all state probabilities (weighted average).
+                                
+                                    The beta-binomial distribution can also be motivated via an urn model for positive integer values of \(\alpha\) and \(\beta\), known as the Pólya urn model. Specifically, imagine an urn containing \(\alpha\) red balls and \(\beta\) black balls, where random draws are made. If a red ball is observed, then two red balls are returned to the urn. Likewise, if a black ball is drawn, then two black balls are returned to the urn. If this is repeated \(n\) times, then the probability of observing x red balls follows a beta-binomial distribution with parameters \(n\), \(\alpha\) and \(\beta\).</p>
+                                <h5>PMF Equation:</h5>
+                                <p>$$Pr(X = y |n, \alpha, \beta) = \binom{n}{y}\frac{B(y+\alpha, n+\beta - y)}{B(\alpha,
+                                    \beta)}$$</p>
+                                <p>where \(\alpha\) is number of y elements in \(n\), \(\beta\) is number of non-y and \(n\) is the number of trials.</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+                
+
+
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Exponential</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#expModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="expModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Exponential Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <canvas id="expodist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="DF">Rate</label>
+                                    <input type="range" id="exp_rate" name="DF"
+                                           min="0" max="5" step="0.25" value="0.25" onchange="update_expo_dist(this.value)">
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>Very similar to the binomial, but makes an additional assumption of different
+                                    probabilities per sub-trial. In other words, can do everything the binomial does,
+                                    and more!</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Continuous data</li>
+                                    <li>Non-negative data</li>
+                                    <li>Often used to measure the amount of time or space between certain events that
+                                        occure
+                                        independently, and at a constant rate</li>
+
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Modelling the time between new outbreaks of Ebola. We define these outbreaks as not
+                                    being
+                                    related to existing outbreaks, and assume that each occurance of an outbreak is the
+                                    result of non-human-to-human transfer of the virus.
+                                    We need a rate per time frame, in this case let us use outbreaks per year, which
+                                    will be
+                                    our \(\lambda\). Given the lambda, we can now get the probabilities of number of
+                                    outbreaks per year.
+                                </p>
+                                <h5>PDF Equation:</h5>
+                                <p>$$Pr(X=x|\lambda) = \lambda e^{-\lambda x}$$</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+                <!-- Card Start-->
+                <div class="col">
+
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Gamma</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#gammaModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="gammaModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- change here -->
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Gamma Distribution</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="colour1">
+                                    <canvas id="gammadist" class="chart"></canvas>
+                                    <div class="options">
+                                    <label for="DF">Alpha</label>
+                                    <input type="range" id="gamma_a" name="DF"
+                                           min="1" max="10" value="3" onchange="update_gamma_dist()">
+                                    <label for="DF">Beta</label>
+                                    <input type="range" id="gamma_b" name="DF"
+                                                  min="1" max="10" value="1" onchange="update_gamma_dist()">
+                                    
+                                  </div>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Description</h5>
+                                    <p>Similar to the exponential distribution, but for multiple occurances. That is,
+                                        how long will it take for \(n\) occurances?</p>
+                                    <h5>Features:</h5>
+                                    <ul>
+                                        <li>Countinous, non-negative data</li>
+                                        <li>Greater flexibility than the exponential, but more complex</li>
+                                        <li>Can be used to model the time it takes for \(n\) independent occurances.
+                                        </li>
+                                    </ul>
+                                    <h5>Example</h5>
+                                    <p>Really simply, lets say that we want to estimate how long it will take 3 people
+                                        to claim their lottery winnings, that is, if 1 person takes 1 day, the second
+                                        takes 2 days, and the third takes 3 days, the total number of days to claim the
+                                        prizes is 6. Most people will want to claim their winning asap, but it is
+                                        unlikely that all 3 will claim instantly. As such, the maximum probability lies
+                                        a little away from 0.
+                                        The spread is determined by the rate \(\lambda\) of how many occurances per day
+                                        (or other time frame) - let's say 0.5 per day. We also need to know the mean
+                                        time it takes for the winners to claim their prize(s). To do this, we take the
+                                        sum of the individual means for each winner, which is in our case \(\mu = 1
+                                        \times 3 = 3\) which leads us to the function \(\Gamma(\mu = 3, \lambda =
+                                        0.5)\).
+                                    </p>
+                                    <h5>PMF Equation:</h5>
+                                    <h6>\(\Gamma(\alpha, \beta)\) formulation:</h6>
+                                    <p>$$Pr(X = x|\alpha, \beta) =
+                                        \frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x} $$</p>
+
+                                    <h6>\(\Gamma(\kappa, \theta)\) formulation:</h6>
+                                    <p>$$ Pr(X = x|\kappa, \theta) =
+                                        \frac{1}{\Gamma(k)\theta^\kappa} x^{k-1} e^{-\frac{x}{\theta}} $$</p>
+
+                                    <h6>\(\Gamma(\mu, \sigma)\) formulation:</h6>
+                                    <p>$$Pr(X = x|\mu, \sigma) =
+                                        \frac{(\frac{\sigma^2}{\mu})^{-\frac{\mu^2}{\sigma^2}}e^{-\frac{\mu
+                                        x}{\sigma^2}} x^{\frac{\mu^2}{\sigma^2}-1}}{\Gamma(\frac{\mu^2}{\sigma^2})}$$
+                                    </p>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal end -->
+                    </div>
+                    <!-- Card End -->
+
+
+
+
+                    <!-- Row end -->
+                </div>
+
+            </div>
+
+            <!-- Fourth row -->
+            <div class="row display-flex">
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Multinomial</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="multivariate tag"></div>
+                                    <div class="discrete tag"></div>
+                                    <div class="likelihood tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#mnomModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="mnomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Multinominal Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <img src="multinomial.png" width="100%" height="200px">
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>This is the multi-outcome variant of the binomial distribution. We have a fixed
+                                    number of trials, each with multiple outcomes. For example, instead of modelling the
+                                    probability of voting for party A in a 2 party system, the Multinomial distribution
+                                    allows for more than 2 parties.
+                                </p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Discrete Data</li>
+                                    <li>Multiple trials with a fixed number of total trials</li>
+                                    <li>Trial outcomes are independent</li>
+                                    <li>Each trial has more than 2 outcomes</li>
+                                    <li>Individual outcomes probabilities are not determined by a factor that varies
+                                        systematically across individuals</li>
+                                    <li>Probability of obtaining each category is the same in each trial</li>
+                                    <li>Overall data we record is the aggregate number of outcomes in each category</li>
+                                    <li>Generalisation of the binomial to handle an arbitrary number of outcome
+                                        categories</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p>An example could be, modelling the prevalence of blood types of a sample of people.
+                                    There are multiple blood types, but let us, for the sake of simplicity, assume there
+                                    are only 3 blood types: A, B, and O.
+                                    This is relatively straight forward. We would create 3 random variables \(X_A, X_B,
+                                    X_O\) for each of the blood types, where X=1 if the subject has the given blood
+                                    type. We know there is an underlying proportion (or probability) for each blood
+                                    type: \(P_A = \frac{1}{2}, P_B = \frac{1}{3}, and P_O = \frac{1}{6}\). So the
+                                    question becomes: what is the probability of getting a certain blood type after n
+                                    trials, given the proportions, or \( Pr(Z_1 = z_1, Z_2 = z_2, ... Z_k = z_k | P_1,
+                                    P_2,...P_3)\).
+                                </p>
+                                <h5>PMF Equation:</h5>
+                                <p>$$Pr(Z_1 = z_1, Z_2 = z_2, ... Z_k = z_k | P_1, P_2,...P_3) =
+                                    \frac{n!}{z_1!z_2!...z_3!}P_1^{z_1},P_2^{z_2},...P_k^{z_k}$$</p>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Multivariate Normal</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="multivariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#mvnormModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="mvnormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Multivariate Normal Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <img src="multivariate_normal.png" width="100%" height="200px">
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>Similar to the univariate normal distribution but accounts for multiple X random variables</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Multivariate distribution</li>
+                                    <li>Continuous</li>
+                                    <li>Unconstrained</li>
+                                    <li>Uses Mean-Vector and Covariance-Matrix</li>
+
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Modelling gene expression of multiple (normally distributed) genes. This model is just the combination of multiple normally-distributed random variables.
+                                </p>
+                                <h5>PDF Equation:</h5>
+                                <p>$$Pr(X=x|\mu\Sigma) = (2\pi)^{-\frac{k}{2}} |\Sigma|^{-\frac{1}{2}}e^{-\frac{1}{2}(x-\mu)'\Sigma^{-1}(x-\mu)}$$
+                                    where \(k\) is the number of random variables/dimensions.
+                                </p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+                <!-- Card Start-->
+                <div class="col">
+
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Multivariate Students-\(t\)</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="multivariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#mvsttModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="mvsttModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- change here -->
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Multivariate Student's-\(t\)
+                                        Distribution</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="colour1">
+                                    <img src="multivariate_t.png" width="100%" height="200px">
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Description</h5>
+                                    <p>Similar to the Univariate-Student's-\(t\) and Multivariate-Normal distributions. The multivariate Student's-\(t\) is the combination of multiple \(t\)-distributed random variables, with more area under the tails than a normal distribution.</p>
+                                    <h5>Features:</h5>
+                                    <ul>
+                                        <li>Continuous</li>
+                                        <li>Unbounded</li>
+                                        <li>Takes in Mean-Vector and Covariance-Matrix</li>
+                                        <li>More area under tails than normal-distribution</li>
+                                    </ul>
+                                    <h5>Example</h5>
+                                    <p>Imagine you are an analyst at a hedge fund, your boss wants you to model the risk of a portfolio containing 2 stocks. The manager says that if all stocks have a simultaneous loss of 5%, then the hedge fund goes bankrupt. The acceptable risk of this is \(\frac{1}{1000}\). You take the daily returns of the 2 stocks and take the multivariate Student's-\(t\) distribution. The area under the curve where both stock returns are sub 5%, is the cumulative probability (risk) of such an event occuring. We settle on the Student's-\(t\) because stock returns are slightly more volatile (more area under the tails) than would be modelled by a normal distribution.</p>
+                                    <h5>PMF Equation:</h5>
+
+                                    <p>$$Pr(X = x|\mu, \sigma, v) =
+                                        \frac{\Gamma(\frac{v+k}{2})}
+                                        {\Gamma(\frac{v}{2})v^{\frac{v}{2}}\pi^{\frac{v}{2}}|\Sigma|^{-\frac{1}{2}} \left[1+\frac{1}{v}(x-\mu)'\Sigma^{-1}(x-\mu)\right]^{(v+k)/2}} $$
+                                        where \(k\) is the number of random variables/dimension, and \(v\) is the degrees of freedom.
+                                    </p>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal end -->
+                    </div>
+                    <!-- Card End -->
+
+
+
+
+                    <!-- Row end -->
+                </div>
+
+            </div>
+            <!-- First row -->
+            <div class="row display-flex">
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Uniform</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#uniformModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="uniformModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Uniform Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <canvas id="uniformdist" class="chart"></canvas>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A very common choice of uninformative prior for variables constrained between 0 and 1. This distribution has the same probability for all values between \(a\) and \(b\).
+                                </p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Continuous parameters</li>
+                                    <li>Simple form of beta distribution!</li>
+                                    <li>Same probability for all values</li>
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Best used as an uninformative prior, when we really have no prior information/ideas about the posterior distribution.
+                                </p>
+                                <h5>PMF Equation:</h5>
+                                <p>$$ Pr(\theta|a,b) = \frac{1}{b-a}\ where\ a < b $$</p>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Beta</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#betapriorModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="betapriorModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Beta Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <canvas id="betadist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">Alpha</label>
+                                    <input type="range" id="betadist_a" name="Sigma"
+                                           min="1" max="15" value="1" onchange="update_beta_dist()">
+                                    <label for="volume">Beta</label>
+                                    <input type="range" id="betadist_b" name="Sigma"
+                                                min="1" max="9" value="1" onchange="update_beta_dist()">
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A more flexible version of the uniform distribution. Able to shift and bend this distribution to mimic a wide range of distributions.
+                                </p>
+                                <p>The Beta function takes in \(a\) and \(b\). For a non-skewed distribution, have \(a = b\). The magnitude determines the peakedness. To have more mass on the left, have \(a > b\).</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Continuous</li>
+                                    <li>Bounded between 0 and 1</li>
+                                    <li>\(Beta(1,1)\) is equivalent to the uniform prior</li>
+
+                                </ul>
+                                <h5>Example</h5>
+                                <p>No real example necessary, but distribution allows us to shift the mean, and influence the posterior, between 0 and 1, for example obesity rates. We expect the obesity rate to be below 50%, so we specify a beta prior to have the most density below 50%.
+                                </p>
+                                <h5>PDF Equation:</h5>
+                                <p>$$ Pr(\theta |\alpha, \beta) = \frac{\theta^{\alpha-1}(1-\theta^{\beta-1})}{B(\alpha, \beta)} $$</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+                <!-- Card Start-->
+                <div class="col">
+
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Logit-Normal</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#logitnormModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="logitnormModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- change here -->
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Logit-Normal Prior</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="colour1">
+                                    <canvas id="logitnormdist" class="chart"></canvas>
+                                    <div class="options">
+                                        <label for="volume">Mean</label>
+                                        <input type="range" id="logitnormdist_mean" name="Sigma"
+                                               min="0" max="1" step="0.05" value=".5" onchange="update_logitnorm_dist()">
+                                        <label for="volume">Variance</label>
+                                        <input type="range" id="logitnormdist_variance" name="Sigma"
+                                                    min="1" max="5" step="0.25" value="1" onchange="update_logitnorm_dist()">
+                                        
+                                      </div>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Description</h5>
+                                    <p>A logistic transformation of a normal distribution. This limits the range of the distribution to 0-1. Otherwise this distribution is also highly flexible just like the Beta distribution.
+
+                                    </p>
+                                    <h5>Features:</h5>
+                                    <ul>
+                                        <li>Continuous</li>
+                                        <li>Bounded between 0-1</li>
+                                        <li>Encompasses a wide range of priors</li>
+                                    </ul>
+                                    <h5>Example</h5>
+                                    <p> No real example necessary, but distribution allows us to shift the mean, and influence the posterior, between 0 and 1, for example obesity rates. We expect the obesity rate to be below 50%, so we specify a logit-normal prior to have the most density below 50%. The idea is to first define a normal distribution with the given properties, then transform it to be bound between 0 and 1.
+                                    </p>
+                                    <h5>PMF Equation:</h5>
+
+                                    <p>$$ Pr(X=\theta|\mu, \sigma) = \frac{1}{\sqrt{2\pi}(1-\theta)\theta\sigma}  \exp{\left( - \frac{(log(\frac{\theta}{1-\theta})-\mu)^2}{2\sigma^2} \right)}$$
+
+                                        where \(\theta\) is \(\frac{1}{1+e^{-a}}\) of \(X \sim logit\text{-}\mathcal{N}(\mu, \sigma)\)
+                                    </p>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal end -->
+                    </div>
+                    <!-- Card End -->
+
+
+
+
+                    <!-- Row end -->
+                </div>
+
+            </div>
+
+            <h2>Special Distributions</h2>
+
+            <!-- Seventh row -->
+            <div class="row display-flex">
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Dirichlet Distribution</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="multivariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#dirichletModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="dirichletModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Dirichlet Prior</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                            <img src="Dirichlet.png" height="200px">
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A multivariate generalisation of the beta distribution. Most relevant, is that the sum of the parameters is equal to 1. The easiest way to understand this distribution is to consider proportions.  
+                                </p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Continous Variables</li>
+                                    <li>Parameters sum to 1</li>
+                                    <li>Can range from weak to strong prior</li>
+                                    
+
+                                </ul>
+                                <h5>Example</h5>
+                                <p>Consider we want to estimate what proportion of the population will vote for which political party. In a 2 party system, the distribution may be estimated around 25% for party 1 and 75% for party b. Of course, these are estimates, hence the probability distribution. Now, if we consider a 3 (or more) party system, the proportions may be 25% for party 1, 35% for party 2, and 40% for party 3. For 3 variables, we can imagine this as an equalateral triangle.
+                                </p>
+                                <h5>PMF Equation:</h5>
+                                <p>$$ Pr(\theta | \alpha_1,\alpha_2,...,\alpha_k) = \frac{1}{B(\alpha)}\prod^k_{i=1}\theta_i^{\alpha_i - 1} $$
+                                    where
+
+                                    $$ B(\alpha) = \frac{\prod^k_{i=1}\Gamma(\alpha_i)}{\Gamma(\sum^k_{i=1 \alpha})}$$
+
+
+                                </p>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Cauchy Distribution</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#cauchyModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="cauchyModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cauchy Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <canvas id="cauchydist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">\(\theta_0\)</label>
+                                    <input type="range" id="cauchy_med" name="Sigma"
+                                           min="-20" max="20" step="0.05" value="0" onchange="update_cauchy_dist()">
+                                    <label for="volume">\(\gamma\)</label>
+                                    <input type="range" id="cauchy_gamma" name="Sigma"
+                                                min="1" max="25" step="0.25" value="4" onchange="update_cauchy_dist()">
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A symmetrical distribution, far more flexible that a normal or student's=\(t\)</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Continuous</li>
+                                    <li>Unconstrained</li>
+                                    <li>Robuster version of the normal or Student's-\(t\), allowing for a greater range of parameter values.</li>
+                                    <li>A special case of the student's-\(t\) where df = 1</li>
+                                    <li>Has no mean analytical mean or variance. Just a median</li>
+
+                                </ul>
+                                <h5>Example</h5>
+                                <p>An example can be anything where we would consider a normal, but need more flexibility with respect to extreme values.
+                                </p>
+                                <h5>PDF Equation:</h5>
+                                <p>$$ p(\theta|\theta_0, \gamma) = \frac{1}{\pi \gamma \left( \frac{(\theta - \theta_0)^2}{\gamma^2} + 1\right)} $$</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+                <!-- Card Start-->
+                <div class="col">
+
+                    <div class="card shadow">
+                        <div class="wrapper">
+                            <div class="left">
+                                <div class="label">
+                                    <h5>Half-Cauchy Distribution</h5>
+                                </div>
+                                <div class="tags">
+                                    <div class="univariate tag"></div>
+                                    <div class="continuous tag"></div>
+                                    <div class="likelihood tag"></div>
+                                    <div class="prior tag"></div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#halfcauchyModal">
+                                    <!-- change here-->
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="halfcauchyModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- change here -->
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Half-Cauchy Distribution</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="colour1">
+                                <canvas id="halfcauchydist" class="chart"></canvas>
+                                <div class="options">
+                                    <label for="volume">\(\theta_0\)</label>
+                                    <input type="range" id="halfcauchy_a" name="Sigma"
+                                           min="-10" max="20" step="0.05" value="0" onchange="update_halfcauchy_dist()">
+                                    <label for="volume">\(\gamma\)</label>
+                                    <input type="range" id="halfcauchy_b" name="Sigma"
+                                                min="1" max="25" step="0.25" value="4" onchange="update_halfcauchy_dist()">
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Description</h5>
+                                <p>A one half cauchy distribution. Very useful for estimating variances, as it only has density for positive values. It is the prefered distribution when compared to Inverse-Gamma and Inverse-\(\chi^2\).</p>
+                                <h5>Features:</h5>
+                                <ul>
+                                    <li>Continuous</li>
+                                    <li>Constrained between 0 and \(\infty\)</li>
+                                    <li>No analytical solution for mean or variance.</li>
+                                    
+                                    
+
+                                </ul>
+                                <h5>Example</h5>
+                                <p>The crocodile example: If we are trying to estimate the length of fully grown male crocodiles, we are interested in measuring the mean. We can assume that the distribution is normal. Given it is normal, we still need to specify a value for the variance - the problem parameter.
+                                    We can do this by specifying a prior for the variance. Naturally, the variance cannot be negative, so we need a distribution where negative values have no density. The benefit of the half-cauchy distribution is the gentle slope, which assigns no large density to infeasible parameters.
+                                </p>
+                                <h5>PDF Equation:</h5>
+                                <p>$$ p(\theta|\theta_0, \gamma) = \frac{1}{\pi \gamma \left( \frac{(\theta - \theta_0)^2}{\gamma^2} + 1\right)}\ if\ \theta > 0\ else\ 0$$</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal end -->
+                </div>
+                <!-- Card End -->
+
+
+
+                </div>
+                    <!-- Row end -->
+                <!-- Eightth Row -->
+            
+                <div class="row display-flex">
+
+                    <!-- Card Start-->
+                    <div class="col">
+    
+                        <div class="card shadow">
+                            <div class="wrapper">
+                                <div class="left">
+                                    <div class="label">
+                                        <h5>Inverse-Gamma Distribution</h5>
+                                    </div>
+                                    <div class="tags">
+                                        <div class="multivariate tag"></div>
+                                        <div class="continuous tag"></div>
+                                        <div class="likelihood tag"></div>
+                                        <div class="prior tag"></div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#inversegammaModal">
+                                        <!-- change here-->
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+    
+    
+    
+    
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="inversegammaModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Inverse-Gamma Distribution</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="colour1">
+                                    <canvas id="invgammadist" class="chart"></canvas>
+                                    <div class="options">
+                                        <label for="volume">\(\alpha\)</label>
+                                        <input type="range" id="invgamma_a" name="Sigma"
+                                               min="1" max="20" step="0.25" value="10" onchange="update_invgamma_dist()">
+                                        <label for="volume">\(\beta\)</label>
+                                        <input type="range" id="invgamma_b" name="Sigma"
+                                                    min="1" max="20" step="0.25" value="4" onchange="update_invgamma_dist()">
+                                        
+                                      </div>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Description</h5>
+                                    <p>A bounded, and skewed distribution useful for estimating non-negative values. Generated by sampling x from a gamma distribution, and taking \(\frac{1}{x}\)
+                                    </p>
+                                    <h5>Features:</h5>
+                                    <ul>
+                                        <li>Bounded</li>
+                                        <li>Continuous</li>
+                                        <li>Half-Cauchy is generally preferred</li>
+                                        
+    
+                                    </ul>
+                                    <h5>Example</h5>
+                                    <p>The crocodile example: If we are trying to estimate the length of fully grown male crocodiles, we are interested in measuring the mean. We can assume that the distribution is normal. Given it is normal, we still need to specify a value for the variance - the problem parameter.
+                                        We can do this by specifying a prior for the variance. Naturally, the variance cannot be negative, so we need a distribution where negative values have no density. The benefit of the inverse-gamma distribution is the skewed nature, meaning we can assign most density around a certain range, with more density toward higher values, and very little near 0.
+                                    </p>
+                                    <h5>PMF Equation:</h5>
+                                    <p>$$ Pr(X=x|\alpha, \beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x ^ {-\alpha-1} exp\left(-\frac{\beta}{x}\right)$$
+    
+    
+                                    </p>
+    
+    
+    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Modal end -->
+                    </div>
+                    <!-- Card End -->
+    
+    
+    
+                    <!-- Card Start-->
+                    <div class="col">
+    
+                        <div class="card shadow">
+                            <div class="wrapper">
+                                <div class="left">
+                                    <div class="label">
+                                        <h5>Inverse-\(\chi^2\) Distribution</h5>
+                                    </div>
+                                    <div class="tags">
+                                        <div class="univariate tag"></div>
+                                        <div class="continuous tag"></div>
+                                        <div class="likelihood tag"></div>
+                                        <div class="prior tag"></div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#invchiModal">
+                                        <!-- change here-->
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+    
+    
+    
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="invchiModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- change here -->
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Inverse-\(\chi^2\) Distribution</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="colour1">
+                                    <canvas id="invchidist" class="chart"></canvas>
+                                    <div class="options">
+                                        
+                                        <label for="volume">Degrees of freedom</label>
+                                        <input type="range" id="invchi_df" name="Sigma"
+                                                    min="1" max="5" step="0.25" value="2" onchange="update_invchi_dist()">
+                                        
+                                      </div>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Description</h5>
+                                    <p>A bounded, and skewed distribution useful for estimating non-negative values. Generated by sampling x from a \(\chi^2\) distribution, and taking \(\frac{1}{x}\)
+                                    </p>
+                                    <h5>Features:</h5>
+                                    <ul>
+                                        <li>Bounded</li>
+                                        <li>Continuous</li>
+                                        <li>Half-Cauchy is generally preferred</li>
+                                        
+    
+                                    </ul>
+                                    <h5>Example</h5>
+                                    <p>The crocodile example: If we are trying to estimate the length of fully grown male crocodiles, we are interested in measuring the mean. We can assume that the distribution is normal. Given it is normal, we still need to specify a value for the variance - the problem parameter.
+                                        We can do this by specifying a prior for the variance. Naturally, the variance cannot be negative, so we need a distribution where negative values have no density. The benefits of the inverse-\(\chi^2\) distribution are the simplicity of parameters and the skewed nature, meaning we can assign most density around a certain range, with more density toward higher values, and very little near 0.
+                                    </p>
+                                    <h5>PMF Equation:</h5>
+                                    <p>$$ Pr(X=x|df) = \frac{2^{-df/2}}{\Gamma(df/2)} x^{-df/2 - 1} e^{-1/2x}$$
+    
+    
+                                    </p>
+    
+    
+    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Modal end -->
+                    </div>
+                    <!-- Card End -->
+    
+                    <!-- Card Start-->
+                    <div class="col">
+    
+                        <div class="card shadow">
+                            <div class="wrapper">
+                                <div class="left">
+                                    <div class="label">
+                                        <h5>Log Normal Distribution</h5>
+                                    </div>
+                                    <div class="tags">
+                                        <div class="univariate tag"></div>
+                                        <div class="continuous tag"></div>
+                                        <div class="likelihood tag"></div>
+                                        <div class="prior tag"></div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#lognormModal">
+                                        <!-- change here-->
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+    
+    
+    
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="lognormModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- change here -->
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Log Normal Distribution</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="colour1">
+                                    <canvas id="lognormdist" class="chart"></canvas>
+                                    <div class="options">
+                                        <label for="volume">Mean</label>
+                                        <input type="range" id="lognorm_a" name="Sigma"
+                                               min="0" max="5" step="0.05" value="1.5" onchange="update_lognorm_dist()">
+                                        <label for="volume">Variance</label>
+                                        <input type="range" id="lognorm_b" name="Sigma"
+                                                    min="0.01" max="4" step="0.25" value=".5" onchange="update_lognorm_dist()">
+                                        
+                                      </div>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Description</h5>
+                                    <p>A very flexible distribution, constrained to positive values. Allows for a large variance.</p>
+                                    <h5>Features:</h5>
+                                    <ul>
+                                        <li>Continuous</li>
+                                        <li>Parameters constrained to be positive</li>
+                                        <li>Possible parameter values could exist across a wide range</li>
+    
+                                    </ul>
+                                    <h5>Example</h5>
+                                    <p>If estimating the number of traffic accidents, we would probably choose a negative binomial. The parameters for the negative bionomial are \(\lambda\) and \(\kappa\), where \(\kappa\) is the inverse dispersion. 
+
+                                        For \(\kappa\), we need to set a prior, because we are not sure exactly which \(\kappa\) we should use. We know that \(\kappa\) must be positive, and does not affect the overall negative binomial distribution too much, so we would like a large variance.
+                                        
+                                        This is where the Log-Normal distribution shines!
+                                    </p>
+                                    <h5>PDF Equation:</h5>
+                                    <p>$$ Pr(X=x|\mu, \sigma) = \frac{1}{x\sqrt{2\pi\sigma^2}} \exp \left( -\frac{(ln(x)-\mu)^2}{2\sigma^2} \right)$$</p>
+    
+    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Modal end -->
+                    </div>
+                    <!-- Card End -->
+    
+    
+    
+    
+                        <!-- Row end -->
+                    </div>
+                    <h2> Covariance Distributions</h2>
+
+                <!-- Ninth Row -->
+                    <div class="row display-flex">
+
+                        <!-- Card Start-->
+                        <div class="col">
+        
+                            <div class="card shadow">
+                                <div class="wrapper">
+                                    <div class="left">
+                                        <div class="label">
+                                            <h5>LKJ Distribution</h5>
+                                        </div>
+                                        <div class="tags">
+                                            <div class="multivariate tag"></div>
+                                            <div class="continuous tag"></div>
+                                            <div class="likelihood tag"></div>
+                                            <div class="prior tag"></div>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#lkjModal">
+                                            <!-- change here-->
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+        
+        
+        
+        
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="lkjModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Lewandowski-Kurowicka-Joe Distribution</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="colour1">
+                                        <canvas id="LKJdist" class="chart"></canvas>
+                                        <div class="options">
+                                            <label for="volume">Eta</label>
+                                            <input type="range" id="LKJ_eta" name="Sigma"
+                                                   min="0" max="20" step="0.05" value="1.5" onchange="update_LKJ_dist()">
+                                            
+                                            
+                                          </div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Description</h5>
+                                        <p> A probability density function for a symmetric matrix. Commonly used as a prior for estimating covariance/correlation matrices. </p>
+
+                                        <p>Note: This function can usually not be visualised, as technically, the X-axis would contain a covariance/correlation matrix. In the simplified case above, a 2x2 correlation matrix has been used, as a 2x2 correlation only has 1 degree of freedom: the off-diagonal value. The diagonals must be 1.
+
+                                            $$C = \begin{bmatrix}
+                                            1 & c_{ij} \\
+                                            c_{ij} & 1 
+                                            \end{bmatrix}$$
+
+                                        This allows us to plot \(c_{ij}\) as a 1-dimensional X-axis.
+                                        </p>
+                                        <h5>Features:</h5>
+                                        <ul>
+                                            <li>Covariance/Correlation prior</li>
+                                            <li>(Practically) Bounded between -1, and 1</li>
+                                            <li>Continuous</li>
+                                            <li>Most useful in hierarchical models</li>
+                                            <li>Often preferred over the Wishart and Inverse-Wishart distributions</li>
+                                            
+        
+                                        </ul>
+                                        <h5>Example</h5>
+                                        <p>Supposed we want to model comorbidity of certain diseases - that is, diseases occuring in the same person at the same time. These diseases may have some correlation, or maybe not. To do this, we need to specify a covariance, or correlation matrix. We can then generate the probability of this matrix occuring using the LKJ distribution.
+                                        </p>
+                                        <h5>PMF Equation:</h5>
+                                        <p>$$ 
+                                            Pr(\mathsf{C}|\eta) =\left(2^{\sum_{k=1}^{K-1}(2(\eta-1)+K-k)(K-k)}\prod_{k=1}^{K-1}\left(B(\eta+(K-k-1)/2,\eta + (K-k-1)/2)\right)^{K-k}\right) (\mathrm{det}\,\mathsf{C})^{\eta-1}.
+                                            $$
+
+                                            or 
+
+                                            $$ Pr(\mathsf{C}|\eta) \propto |\mathsf{C}^{\eta-1}|$$
+        
+        
+                                        </p>
+        
+        
+        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <!-- Modal end -->
+                        </div>
+                        <!-- Card End -->
+        
+        
+        
+                        <!-- Card Start-->
+                        <div class="col">
+        
+                            <div class="card shadow">
+                                <div class="wrapper">
+                                    <div class="left">
+                                        <div class="label">
+                                            <h5>Wishart Distribution</h5>
+                                        </div>
+                                        <div class="tags">
+                                            <div class="univariate tag"></div>
+                                            <div class="continuous tag"></div>
+                                            <div class="likelihood tag"></div>
+                                            <div class="prior tag"></div>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#wishartModal">
+                                            <!-- change here-->
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+        
+        
+        
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="wishartModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- change here -->
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Wishart Distribution</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="colour1">
+                                    <canvas id="wishdist" class="chart"></canvas>
+                                        <div class="options">
+                                            <label for="volume">Degrees of freedom</label>
+                                            <input type="range" id="wish_df" name="Sigma"
+                                                   min="2" max="10" step="0.05" value="3.35" onchange="update_wish_dist()">
+                                            
+                                            
+                                          </div>
+                                    </div>  
+                                    <div class="modal-body">
+                                        <h5>Description</h5>
+                                        <p>The Wishart distribution is a generalization to multiple dimensions of the gamma distribution.
+                                            his distribution, along with the Inverse-Wishart and others, are of great importance in the estimation of covariance matrices in multivariate statistics.
+                                        </p>
+                                        <p>Note: This function can usually not be visualised, as technically, the X-axis would contain a covariance/correlation matrix. In the simplified case above, a 2x2 correlation matrix has been used, as a 2x2 correlation only has 1 degree of freedom: the off-diagonal value. The diagonals must be 1.
+
+                                            $$C = \begin{bmatrix}
+                                            1 & c_{ij} \\
+                                            c_{ij} & 1 
+                                            \end{bmatrix}$$
+
+                                        This allows us to plot \(c_{ij}\) as a 1-dimensional X-axis.
+                                        </p>
+                                        <h5>Features:</h5>
+                                        <ul>
+                                            <li>Continuous</li>
+                                            <li>Prior distribution for covariance matrices</li>
+                                            <li>Conjugate to multivariate normal likelihoods</li>
+                                            <li>Present quite restrictive correlations between parameters. Often LKJ is preferred.</li>
+                                            <li>For a symmetric matrix</li>
+                                            <li>Practically bounded between -1 and 1</li>
+                                            <li>The Gamma distribution is a special case of this distribution</li>
+        
+                                        </ul>
+                                        <h5>Related Distributions</h5>
+                                        <ul>
+                                            <li>Inverse-Wishart</li>
+                                            <li>Gamma Distribution</li>
+                                        </ul>
+                                        <h5>Example</h5>
+                                        <p>Supposed we want to model comorbidity of certain diseases - that is, diseases occuring in the same person at the same time. These diseases may have some correlation, or maybe not. To do this, we need to specify a covariance, or correlation matrix. We can then generate the probability of this matrix occuring using the Wishart distribution.
+                                        </p>
+                                        <h5>PDF Equation:</h5>
+                                        <p>$$ Pr(X=x|\Psi, n) = \frac{|x|^{(n-p-1)/2} \exp\left(-tr(\Psi^{-1}x) / 2\right)}{2^{\frac{np}{2}}|\Psi|^{\frac{n}{2}}\Gamma_p(\frac{n}{2})}$$
+                                            where \(x\) is a admissible covariance or correlation matrix, \(\Psi\) is a scale matrix, \(n\) are the degrees of freedom, and \(p\) are the number of rows of the \(x\) matrix.
+
+                                        </p>
+        
+        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <!-- Modal end -->
+                        </div>
+                        <!-- Card End -->
+        
+                        <!-- Card Start-->
+                        <div class="col">
+        
+                            <div class="card shadow">
+                                <div class="wrapper">
+                                    <div class="left">
+                                        <div class="label">
+                                            <h5>Inverse-Wishart Distribution</h5>
+                                        </div>
+                                        <div class="tags">
+                                            <div class="univariate tag"></div>
+                                            <div class="continuous tag"></div>
+                                            <div class="likelihood tag"></div>
+                                            <div class="prior tag"></div>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#inversewishartModal">
+                                            <!-- change here-->
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+        
+        
+        
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="inversewishartModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- change here -->
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Inverse-Wishart Distribution</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="colour1">
+                                        <canvas id="invwishdist" class="chart"></canvas>
+                                            <div class="options">
+                                                <label for="volume">Degrees of freedom</label>
+                                                <input type="range" id="invwish_df" name="Sigma"
+                                                       min="2" max="10" step="0.05" value="3.35" onchange="update_invwish_dist()">
+                                                
+                                                
+                                              </div>
+                                        </div>  
+                                    <div class="modal-body">
+                                        <h5>Description</h5>
+                                        <p>The inverse Wishart distribution, also called the inverted Wishart distribution, is a probability distribution defined on real-valued positive-definite matrices. </p>
+                                        <p>Note: This function can usually not be visualised, as technically, the X-axis would contain a covariance/correlation matrix. In the simplified case above, a 2x2 correlation matrix has been used, as a 2x2 correlation only has 1 degree of freedom: the off-diagonal value. The diagonals must be 1.
+
+                                            $$C = \begin{bmatrix}
+                                            1 & c_{ij} \\
+                                            c_{ij} & 1 
+                                            \end{bmatrix}$$
+
+                                        This allows us to plot \(c_{ij}\) as a 1-dimensional X-axis.
+                                        </p>
+                                        <h5>Features:</h5>
+                                        <ul>
+                                            <li>Continuous</li>
+                                            <li>Prior distribution for covariance matrices</li>
+                                            <li>Conjugate to multivariate normal likelihoods</li>
+                                            <li>Present quite restrictive correlations between parameters. Often LKJ is preferred.</li>
+                                            <li>For a symmetric matrix</li>
+                                            <li>Practically bounded between -1 and 1</li>
+                                            <li>The Gamma distribution is a special case of this distribution</li>
+        
+                                        </ul>
+                                        <h5>Related Distributions</h5>
+                                        <ul>
+                                            <li>Wishart</li>
+                                            <li>Gamma Distribution</li>
+                                        </ul>
+                                        <h5>Example</h5>
+                                        <p>Supposed we want to model comorbidity of certain diseases - that is, diseases occuring in the same person at the same time. These diseases may have some correlation, or maybe not. To do this, we need to specify a covariance, or correlation matrix. We can then generate the probability of this matrix occuring using the Inverse-Wishart distribution.
+                                        </p>
+                                        <h5>PDF Equation:</h5>
+                                        <p>$$ Pr(X=x|\Psi, n) = \frac{|\Psi|^{\frac{n}{2}}|x|^{(n-p-1)/2} \exp\left(-tr(\Psi^{-1}x) / 2\right)}{2^{\frac{np}{2}}\Gamma_p(\frac{n}{2})}$$
+                                            where \(x\) is a admissible covariance or correlation matrix, \(\Psi\) is a scale matrix, \(n\) are the degrees of freedom, and \(p\) are the number of rows of the \(x\) matrix.
+
+                                        </p>
+        
+        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <!-- Modal end -->
+                        </div>
+                        <!-- Card End -->
+        
+        
+        
+        
+                            <!-- Row end -->
+                        </div>
+                
+            </div>
+        </div>
+
+
+
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <script src="js_charts.js"></script>
+        <script src="js_functions.js"></script>
+        
+
+</body>
+
+</html>
