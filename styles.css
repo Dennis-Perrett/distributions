@@ -179,11 +179,11 @@ html{
     .tags .tag{
         max-width: 40px;
         overflow: hidden;
-        line-height: 20px;
+        line-height: 17px;
     }
 
     .tags .tag:hover{
-        opacity: .5;
+        opacity: .5 !important;
     }
 
 }
@@ -202,13 +202,13 @@ html{
     }
 
     .tags .tag{
-        max-width: 40px;
+        max-width: 30px;
         overflow: hidden;
-        line-height: 20px;
+        line-height: 17px;
     }
 
     .tags .tag:hover{
-        opacity: .5;
+        opacity: .5 !important;
     }
 
 }
