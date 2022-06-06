@@ -189,6 +189,11 @@ html{
         opacity: .5;
     }
 
+    .col{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
 }
 
 /* Landscape */
