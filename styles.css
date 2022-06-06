@@ -1,6 +1,13 @@
+
+
+
+
 html{
     padding: 0;
 }
+
+
+
 
 #searchcontainer{
     background-color: #fff;
@@ -117,11 +124,6 @@ html{
     margin-bottom: 20px;
 }
 
-@media (min-width: 576px){
-    .modal-dialog {
-        max-width: 800px;
-    }
-}
 
 
 .wrapper {
@@ -153,17 +155,49 @@ html{
 .label h5{
     margin-bottom: 5px;
     font-size: 1.25rem;
+    margin-top: 5px !important;
+    display: inline-block !important;
 }
+
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .label h5{
+        margin-bottom: 5px;
+        font-size: .8rem;
+        margin-top: 5px !important;
+        display: inline-block !important;
+    }
+
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .label h5{
+        margin-bottom: 5px;
+        font-size: 1rem;
+        margin-top: 5px !important;
+        display: inline-block !important;
+    }
+
+}
+
+
+
 
 button:focus{
     box-shadow: none !important;
 }
 
-.label h5{
-    margin-top: 5px !important;
-    display: inline-block !important;
- 
-}
+
 .right {
     display: inline-block;
     width: 15%;
