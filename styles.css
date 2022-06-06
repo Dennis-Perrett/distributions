@@ -177,7 +177,7 @@ html{
     }
 
     .tags .tag{
-        max-width: 20px;
+        max-width: 30px;
         overflow: hidden;
     }
       
@@ -197,6 +197,7 @@ html{
     .card button{
         width: 30px;
         height: 30px;
+        margin-top: 8px;
     }
 
 }
