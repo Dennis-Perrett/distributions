@@ -185,13 +185,18 @@ html{
          line-height: 17px;
       }
 
-    #searchcontainer .tag:hover{
+    #searchcontainer .tag:focus{
         opacity: .5;
     }
 
     .col{
         padding-left: 5px;
         padding-right: 5px;
+    }
+
+    .card button{
+        width: 30px;
+        height: 30px;
     }
 
 }
@@ -220,7 +225,7 @@ html{
       }
          
 
-    #searchcontainer .tag:hover{
+    #searchcontainer .tag:focus{
         opacity: .5;
     }
 
