@@ -188,6 +188,11 @@ html{
         display: inline-block !important;
     }
 
+    .tags .tag{
+        max-width: 40px;
+        overflow: hidden;
+    }
+
 }
 
 
