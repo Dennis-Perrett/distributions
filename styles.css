@@ -182,6 +182,10 @@ html{
         line-height: 20px;
     }
 
+    .tags .tag:hover{
+        opacity: .5;
+    }
+
 }
 
 /* Portrait */
@@ -201,6 +205,10 @@ html{
         max-width: 40px;
         overflow: hidden;
         line-height: 20px;
+    }
+
+    .tags .tag:hover{
+        opacity: .5;
     }
 
 }
