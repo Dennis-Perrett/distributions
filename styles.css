@@ -6,6 +6,9 @@ html{
     padding: 0;
 }
 
+.modal-dialog{
+    max-width: 900px;
+}
 
 
 
@@ -173,6 +176,12 @@ html{
         display: inline-block !important;
     }
 
+    .tags .tag{
+        max-width: 40px;
+        overflow: hidden;
+        line-height: 20px;
+    }
+
 }
 
 /* Portrait */
@@ -191,6 +200,7 @@ html{
     .tags .tag{
         max-width: 40px;
         overflow: hidden;
+        line-height: 20px;
     }
 
 }
